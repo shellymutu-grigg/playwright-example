@@ -27,4 +27,8 @@ test('Login and wait for network to be idle', async ({page}) =>
     await signInBtn.click();
     await page.waitForLoadState('networkidle');
     await expect(page.locator('#nav-link-accountList-nav-line-1')).toContainText('Hello, M');
-});
+    await page.locator('#twotabsearchtextbox').fill('ISTQB');
+    await page.locator('#nav-search-submit-button').click();
+    await page.locator('.rush-component').nth(1).click();
+    await page.pause();
+  });
