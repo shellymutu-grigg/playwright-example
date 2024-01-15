@@ -1,6 +1,14 @@
-class productsPage{
+import { Page, Locator } from 'playwright';
 
-    constructor(page){
+class productsPage {
+    page: Page;
+    addToCartButton: Locator;
+    goToCartButton: Locator;
+    message: Locator;
+    products: Locator;
+    productName: string | null;
+
+    constructor(page: Page){
         this.page = page;
         this.addToCartButton = this.page.locator('#add-to-cart-button');
         this.goToCartButton = this.page.locator('text=Go to Cart');
@@ -8,25 +16,25 @@ class productsPage{
         this.products = this.page.locator('.puis-card-container');
     }
 
-    async findProductAndAddToCart(productName, addedToCart){
-        const count = await this.products.count();
-            for(let i = 0; i < count; i++){
-            const product = await this.products.nth(i).locator('h2').textContent();
-            if(product.trim() === productName){
-                this.addProductToCart(i, product);
+    async findProductAndAddToCart(requestedProductName: string, addedToCart: string){
+        const count: number = await this.products.count();
+            for(let i: number = 0; i < count; i++){
+            this.productName = await this.products.nth(i).locator('h2').textContent();
+            if(this.productName != null && this.productName.trim() === requestedProductName){
+                this.addProductToCart(i, this.productName);
                 this.validateProductSuccessfullyAddedToCart(addedToCart);
                 break;
             }
         }
     }
 
-    async addProductToCart(i, product){
+    async addProductToCart(i: number, product: string){
         await this.products.nth(i).locator('h2').locator('span').click();
         console.log('Selected product name: ',"'", product.trim(), "'");
         await this.addToCartButton.first().click();
     }
 
-    async validateProductSuccessfullyAddedToCart(addedToCart){
+    async validateProductSuccessfullyAddedToCart(addedToCart: string){
         await this.message
                 .filter({ hasText: addedToCart })
                 .isVisible();

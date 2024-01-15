@@ -1,14 +1,17 @@
 {
   "name": "playwright-example",
   "version": "1.0.0",
-  "description": "A repository to demonstrate competancy with playwright framework",
+  "description": "A repository to demonstrate competency with playwright framework",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test -c tests"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.40.1",
-    "@types/node": "^20.10.8"
+    "@types/node": "^20.11.0",
+    "playwright-core": "^1.40.1"
   }
 }

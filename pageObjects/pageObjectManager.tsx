@@ -1,10 +1,17 @@
-const { loginPage } = require('../pageObjects/loginPage');
-const { landingPage } = require('../pageObjects/landingPage');
-const { productsPage } = require('../pageObjects/productsPage');
-const { cartPage } = require('../pageObjects/cartPage');
+import type { Page } from 'playwright';
+const { loginPage } = require('./loginPage');
+const { landingPage } = require('./landingPage');
+const { productsPage } = require('./productsPage');
+const { cartPage } = require('./cartPage');
 
 class pageObjectManager{
-    constructor(page){
+    page: Page;
+    loginPage: Page;
+    landingPage: Page;
+    productsPage: Page;
+    cartPage: Page;
+
+    constructor(page: Page){
         this.page = page;
         this.loginPage = new loginPage(this.page);
         this.landingPage = new landingPage(this.page);

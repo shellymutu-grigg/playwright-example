@@ -1,8 +1,18 @@
+import { Page, Locator } from 'playwright';
 const { url } = require('../data/data');
 const { expect } = require('@playwright/test');
 
 class loginPage{
-    constructor(page){
+    page: Page;
+    continueBtn: Locator;
+    loginGreeting: Locator;
+    passwordField: Locator;
+    signInBtn: Locator;
+    usernameField: Locator;
+    username: string;
+    password: string;
+
+    constructor(page: Page){
         this.page = page;
         this.continueBtn = this.page.locator('#continue');
         this.loginGreeting = this.page.locator('#nav-link-accountList-nav-line-1');
@@ -11,26 +21,28 @@ class loginPage{
         this.usernameField = this.page.locator('#ap_email');
     }
 
-    async navigateToSignInPage(title){
+    async navigateToSignInPage(title: string){
         await this.page.goto(url);
         console.log('Page title: ', await this.page.title());
         await expect(this.page).toHaveTitle(title);
     }
 
     async login(){
-        await this.usernameField.fill(process.env.username_amazon);
+        this.username = process.env.username_amazon!;
+        this.password = process.env.password_amazon!;
+        await this.usernameField.fill(this.username);
         await this.continueBtn.first().click();
-        await this.passwordField.fill(process.env.password_amazon);
+        await this.passwordField.fill(this.password);
         await this.signInBtn.click();
     }
 
-    async validateLogin(authenticationRequired, greeting){
+    async validateLogin(authenticationRequiredMessage: string, loggedInMessage: string){
         await this.page.waitForLoadState('networkidle');
         const title = await this.page.title();
-        if(title === authenticationRequired){
+        if(title === authenticationRequiredMessage){
           await this.page.pause();
         }
-        await expect(this.loginGreeting).toContainText(greeting);
+        await expect(this.loginGreeting).toContainText(loggedInMessage);
     }
 }
 module.exports = { loginPage }

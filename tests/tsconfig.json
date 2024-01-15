@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+      "lib": ["es6"],
+      "baseUrl": ".", // This must be specified if "paths" is.
+      "paths": {
+        "@constants": ["./constants/constants.ts"],
+        "@data": ["./data/data.ts"],
+      },
+      "types": [ "node" ],
+      "typeRoots": [ "../node_modules/@types" ],
+      "target": "ESNext",
+      "module": "commonjs",
+      "moduleResolution": "Node",
+      "sourceMap": true,
+      "outDir": "../tests-out",
+      "moduleDetection": "force"
+    },
+}

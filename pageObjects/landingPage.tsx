@@ -1,7 +1,14 @@
-const { expect } = require('@playwright/test');
+import { Page, Locator } from 'playwright';
+import { expect } from '@playwright/test';
 
 class landingPage{
-    constructor(page){
+    page: Page;
+    accountLink: Locator;
+    searchField: Locator;
+    searchButton: Locator;
+    signOutLink: Locator;
+
+    constructor(page: Page){
         this.page = page;
         this.accountLink = this.page.locator("[data-nav-ref='nav_youraccount_btn']");
         this.searchField = this.page.locator('#twotabsearchtextbox');
@@ -9,14 +16,14 @@ class landingPage{
         this.signOutLink = this.page.locator('#nav-item-signout');
     }
 
-    async searchForProduct(searchText){
+    async searchForProduct(searchText: string){
         await this.page.waitForLoadState('domcontentloaded');
         await this.searchField.fill(searchText);
         await this.searchButton.click();
         await this.page.waitForLoadState('domcontentloaded');
     }
 
-    async logout(title){
+    async logout(title: string){
         await this.accountLink.hover();
         await this.signOutLink.first().click();
         await expect(this.page).toHaveTitle(title);
