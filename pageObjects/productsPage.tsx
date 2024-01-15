@@ -1,6 +1,6 @@
-import { Page, Locator } from 'playwright';
+import type { Page, Locator } from 'playwright-core';
 
-class productsPage {
+export class productsPage {
     page: Page;
     addToCartButton: Locator;
     goToCartButton: Locator;

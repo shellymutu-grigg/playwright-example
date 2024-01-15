@@ -1,16 +1,16 @@
-import { Page, Locator } from 'playwright';
-const { url } = require('../data/data');
-const { expect } = require('@playwright/test');
+import type { Page, Locator } from 'playwright-core';
+import { loginUrl } from '../data/data';
+import { expect } from '@playwright/test';
 
-class loginPage{
+export class loginPage{
     page: Page;
     continueBtn: Locator;
     loginGreeting: Locator;
     passwordField: Locator;
     signInBtn: Locator;
     usernameField: Locator;
-    username: string;
-    password: string;
+    username = process.env.username_amazon!;
+    password = process.env.password_amazon!;
 
     constructor(page: Page){
         this.page = page;
@@ -22,14 +22,12 @@ class loginPage{
     }
 
     async navigateToSignInPage(title: string){
-        await this.page.goto(url);
+        await this.page.goto(loginUrl);
         console.log('Page title: ', await this.page.title());
         await expect(this.page).toHaveTitle(title);
     }
 
     async login(){
-        this.username = process.env.username_amazon!;
-        this.password = process.env.password_amazon!;
         await this.usernameField.fill(this.username);
         await this.continueBtn.first().click();
         await this.passwordField.fill(this.password);

@@ -1,7 +1,7 @@
-import { Page, Locator } from 'playwright';
+import type { Page, Locator } from 'playwright-core';
 import { expect } from '@playwright/test';
 
-class landingPage{
+export class landingPage{
     page: Page;
     accountLink: Locator;
     searchField: Locator;

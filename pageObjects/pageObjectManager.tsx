@@ -1,15 +1,15 @@
-import type { Page } from 'playwright';
-const { loginPage } = require('./loginPage');
-const { landingPage } = require('./landingPage');
-const { productsPage } = require('./productsPage');
-const { cartPage } = require('./cartPage');
+import type { Page } from 'playwright-core'
+import { loginPage } from './loginPage';
+import { landingPage } from './landingPage';
+import { productsPage } from './productsPage';
+import { cartPage } from './cartPage';
 
-class pageObjectManager{
+export class pageObjectManager{
     page: Page;
-    loginPage: Page;
-    landingPage: Page;
-    productsPage: Page;
-    cartPage: Page;
+    loginPage: loginPage;
+    landingPage: landingPage;
+    productsPage: productsPage;
+    cartPage: cartPage;
 
     constructor(page: Page){
         this.page = page;

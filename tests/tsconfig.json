@@ -1,10 +1,9 @@
 {
     "compilerOptions": {
-      "lib": ["es6"],
+      "lib": ["es6", "dom"],
       "baseUrl": ".", // This must be specified if "paths" is.
       "paths": {
-        "@constants": ["./constants/constants.ts"],
-        "@data": ["./data/data.ts"],
+        "@constants": [ "constants/"],
       },
       "types": [ "node" ],
       "typeRoots": [ "../node_modules/@types" ],
@@ -13,6 +12,7 @@
       "moduleResolution": "Node",
       "sourceMap": true,
       "outDir": "../tests-out",
-      "moduleDetection": "force"
+      "moduleDetection": "force",
+      "jsx": "preserve"
     },
 }

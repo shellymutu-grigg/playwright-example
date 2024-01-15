@@ -6,23 +6,23 @@
  * test.only to run a single test
 */
 
-const { test } = require('@playwright/test');
-const { pageObjectManager } = require('../pageObjects/pageObjectManager.js');
-const { 
+import { test } from '@playwright/test';
+import { pageObjectManager } from '../pageObjects/pageObjectManager';
+import { 
   PRODUCT_ADDED_TO_CART_MESSAGE, 
   AUTHENTICATION_REQUIRED_MESSAGE, 
   LOGGED_IN_MESSAGE, 
   PRODUCT_NAME, 
   SEARCH_TEXT, 
-  SIGN_IN_PAGE_TITLE }  = require('../constants/constants');
+  SIGN_IN_PAGE_TITLE }  from '../constants/constants';
 
 test('E2E: Login to Amazon.com, add product to cart, remove, then logout', async ({ page }) =>
 {
   const pageObjects = new pageObjectManager(page);
-  const cartPage = pageObjects.getCartPage(page);
-  const loginPage = pageObjects.getLoginPage(page);
-  const landingPage = pageObjects.getLandingPage(page);
-  const productsPage = pageObjects.getProductsPage(page);
+  const cartPage = pageObjects.getCartPage();
+  const loginPage = pageObjects.getLoginPage();
+  const landingPage = pageObjects.getLandingPage();
+  const productsPage = pageObjects.getProductsPage();
   
   await loginPage.navigateToSignInPage(SIGN_IN_PAGE_TITLE);
   await loginPage.login();
