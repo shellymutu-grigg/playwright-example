@@ -1,7 +1,12 @@
 import type { APIRequestContext, APIResponse } from "playwright-core";
 import { eComCreateOrderPostApiUrl, eComLoginPostApiUrl, eComNewPasswordPostApiUrl } from "../data/data";
 
+interface Response {
+    token: string,
+    orderId: string
+}
 export class apiUtils{
+    
     apiContext: APIRequestContext;
 
     constructor(apiContext: APIRequestContext){
@@ -13,14 +18,14 @@ export class apiUtils{
         return response;
     }
 
-    async displayUserDetails(response: string){
+    async displayUserDetails(response: string): Promise<void>{
         let json = JSON.parse(response);
         let jsonResult = json.results[0]; 
         console.log(`User name: ${jsonResult.name.title} ${jsonResult.name.first} ${jsonResult.name.last}`);
         console.log(`Address:   ${jsonResult.location.street.number} ${jsonResult.location.street.name}, ${jsonResult.location.city}, ${jsonResult.location.country}, ${jsonResult.location.postcode}`);
     }
 
-    async createOrder(loginPayload: object, orderPayLoad: object, resetPasswordPayLoad: object){
+    async createOrder(loginPayload: object, orderPayLoad: object, resetPasswordPayLoad: object): Promise<Response>{
 
         let response = {
             token: "",
@@ -42,7 +47,7 @@ export class apiUtils{
         return response;
     }
 
-    async getToken(resetPasswordPayLoad: object, loginPayLoad: object) {
+    async getToken(resetPasswordPayLoad: object, loginPayLoad: object): Promise<string> {
         let loginResponse = await this.apiContext.post(eComLoginPostApiUrl, 
         {
             data: loginPayLoad,
