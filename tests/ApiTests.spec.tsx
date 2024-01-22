@@ -40,7 +40,7 @@ test('Generate user name and address from an API call', async () =>
     await localApiUtils.displayUserDetails(await response.text());
 });
 
-test('Hijack and mock an API response to force UI to display no orders', async ({ page }) =>
+test('@API Hijack and mock an API response to force UI to display no orders', async ({ page }) =>
 {
     const ordersLink = page.locator("button[routerlink='/dashboard/myorders']");
     const messageElement = page.locator('.mt-4');
