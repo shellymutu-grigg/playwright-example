@@ -16,14 +16,14 @@ export class landingPage{
         this.signOutLink = this.page.locator('#nav-item-signout');
     }
 
-    async searchForProduct(searchText: string){
+    async searchForProduct(searchText: string): Promise<void>{
         await this.page.waitForLoadState('domcontentloaded');
         await this.searchField.fill(searchText);
         await this.searchButton.click();
         await this.page.waitForLoadState('domcontentloaded');
     }
 
-    async logout(title: string){
+    async logout(title: string): Promise<void>{
         await this.accountLink.hover();
         await this.signOutLink.first().click();
         await expect(this.page).toHaveTitle(title);

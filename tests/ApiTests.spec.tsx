@@ -33,7 +33,7 @@ test.beforeAll( async () => {
     apiContext = await request.newContext();
 });
 
-test('Generate user name and address from an API call', async () =>
+test('@API Generate user name and address from an API call', async () =>
 {
     const localApiUtils = new apiUtils(apiContext);
     let response = await localApiUtils.getResponse(randomUserApiUrl);

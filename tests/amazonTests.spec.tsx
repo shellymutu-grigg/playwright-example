@@ -28,7 +28,7 @@ import {
   SEARCH_TEXT, 
   SIGN_IN_PAGE_TITLE }  from '../constants/constants';
 
-test('@E2E: Login to Amazon.com, add product to cart, remove, then logout', async ({ page }) =>
+test('@Regression Login to Amazon.com, add product to cart, remove, then logout', async ({ page }) =>
 {
   const pageObjects = new pageObjectManager(page);
   const cartPage = pageObjects.getCartPage();
@@ -37,7 +37,7 @@ test('@E2E: Login to Amazon.com, add product to cart, remove, then logout', asyn
   const productsPage = pageObjects.getProductsPage();
   
   await loginPage.navigateToSignInPage(SIGN_IN_PAGE_TITLE);
-  await loginPage.login();
+  await loginPage.loginToAmazon();
   await loginPage.validateLogin(AUTHENTICATION_REQUIRED_MESSAGE, LOGGED_IN_MESSAGE);
 
   await landingPage.searchForProduct(SEARCH_TEXT);
@@ -47,5 +47,17 @@ test('@E2E: Login to Amazon.com, add product to cart, remove, then logout', asyn
 
   await cartPage.deleteProductFromCart();  
 
+  await landingPage.logout(SIGN_IN_PAGE_TITLE);
+});
+
+test('@Regression Amazon.com login and logout', async ({ page }) =>
+{
+  const pageObjects = new pageObjectManager(page);
+  const loginPage = pageObjects.getLoginPage();
+  const landingPage = pageObjects.getLandingPage();
+  
+  await loginPage.navigateToSignInPage(SIGN_IN_PAGE_TITLE);
+  await loginPage.loginToAmazon();
+  await loginPage.validateLogin(AUTHENTICATION_REQUIRED_MESSAGE, LOGGED_IN_MESSAGE);  
   await landingPage.logout(SIGN_IN_PAGE_TITLE);
 });

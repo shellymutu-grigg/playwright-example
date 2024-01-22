@@ -16,7 +16,7 @@ export class productsPage {
         this.products = this.page.locator('.puis-card-container');
     }
 
-    async findProductAndAddToCart(requestedProductName: string, addedToCart: string){
+    async findProductAndAddToCart(requestedProductName: string, addedToCart: string): Promise<void>{
         const count: number = await this.products.count();
             for(let i: number = 0; i < count; i++){
             this.productName = await this.products.nth(i).locator('h2').textContent();
@@ -28,19 +28,19 @@ export class productsPage {
         }
     }
 
-    async addProductToCart(i: number, product: string){
+    async addProductToCart(i: number, product: string): Promise<void>{
         await this.products.nth(i).locator('h2').locator('span').click();
         console.log('Selected product name: ',"'", product.trim(), "'");
         await this.addToCartButton.first().click();
     }
 
-    async validateProductSuccessfullyAddedToCart(addedToCart: string){
+    async validateProductSuccessfullyAddedToCart(addedToCart: string): Promise<void>{
         await this.message
                 .filter({ hasText: addedToCart })
                 .isVisible();
     }
 
-    async navigateToCart(){
+    async navigateToCart(): Promise<void>{
         await this.goToCartButton.first().click();
     }
 }
