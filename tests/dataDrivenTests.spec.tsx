@@ -7,36 +7,35 @@
  *  - allure open
 */
 
-const { test } = require('@playwright/test');
-const { pageObjectManager } = require('../pageObjects/pageObjectManager');
-const testData = require('../data/testData');
+import { test } from '@playwright/test';
+import { pageObjectManager } from '../pageObjects/pageObjectManager';
+import testData from '../data/testData';
+import { 
+    PRODUCT_ADDED_TO_CART_MESSAGE, 
+    AUTHENTICATION_REQUIRED_MESSAGE, 
+    LOGGED_IN_MESSAGE,  
+    SIGN_IN_PAGE_TITLE }  from '../constants/constants';
 
 for(const data of testData) {
-    test(`@Regression Test executed with data: ${data.productName}`, async ({ page }) =>
+    test(`@Regression Data driven test for product: ${data.productName}`, async ({ page }) =>
     {
-        const username = data.username;
-        const password = data.password;
-        const productName = data.productName;
-
         const pageObjects = new pageObjectManager(page);
-        const login = pageObjects.getLoginPage(page);
-        const dashboard = pageObjects.getDashboardPage(page);
-        const cart = pageObjects.getCartPage(page);
-        const order = pageObjects.getOrderPage(page);
-        const orders = pageObjects.getOrdersPage(page);
+        const cartPage = pageObjects.getCartPage();
+        const loginPage = pageObjects.getLoginPage();
+        const landingPage = pageObjects.getLandingPage();
+        const productsPage = pageObjects.getProductsPage();
+        
+        await loginPage.navigateToSignInPage(SIGN_IN_PAGE_TITLE);
+        await loginPage.loginToAmazon(data.username, data.username);
+        await loginPage.validateLogin(AUTHENTICATION_REQUIRED_MESSAGE, LOGGED_IN_MESSAGE);
 
-        await login.goTo();
-        await login.loginToECom(username, password);
+        await landingPage.searchForProduct(data.productSearchText);
 
-        await dashboard.addProductToCart(productName);
-        await dashboard.navigateToCart();
+        await productsPage.findProductAndAddToCart(data.productName, PRODUCT_ADDED_TO_CART_MESSAGE);
+        await productsPage.navigateToCart();
 
-        await cart.placeOrder(productName);
-        await cart.validateOrderSuccessMessage(username);
+        await cartPage.deleteProductFromCart();  
 
-        const orderId = await order.confirmOrderDetails();
-        await order.navigateToOrdersPage();
-
-        await orders.validateOrder(orderId);
+        await landingPage.logout(SIGN_IN_PAGE_TITLE);
     });
 }

@@ -13,13 +13,22 @@ export class productsPage {
         this.addToCartButton = this.page.locator('#add-to-cart-button');
         this.goToCartButton = this.page.locator('text=Go to Cart');
         this.message = this.page.locator('.a-section a-padding-medium sw-atc-message-section');
-        this.products = this.page.locator('.puis-card-container');
+        this.products = this.page.locator('.puis-card-container').locator('h2').locator('span');
     }
 
     async findProductAndAddToCart(requestedProductName: string, addedToCart: string): Promise<void>{
         const count: number = await this.products.count();
-            for(let i: number = 0; i < count; i++){
-            this.productName = await this.products.nth(i).locator('h2').textContent();
+        console.log('  Number of products: ',"'", count, "'");
+        console.log('requestedProductName: ',"'", requestedProductName, "'");
+        console.log('    this.productName: ',"'", this.productName, "'");
+        for(let i: number = 0; i < count; i++){
+            await this.page.pause();
+            console.log('matching products: ',"'", await this.products.nth(i).count(), "'");
+            if (await this.products.nth(i).count() > 1){
+                this.productName = await this.products.nth(i)[1].textContent();
+            } else {
+                this.productName = await this.products.nth(i).textContent();
+            }
             if(this.productName != null && this.productName.trim() === requestedProductName){
                 this.addProductToCart(i, this.productName);
                 this.validateProductSuccessfullyAddedToCart(addedToCart);
@@ -29,7 +38,7 @@ export class productsPage {
     }
 
     async addProductToCart(i: number, product: string): Promise<void>{
-        await this.products.nth(i).locator('h2').locator('span').click();
+        await this.products.nth(i).click();
         console.log('Selected product name: ',"'", product.trim(), "'");
         await this.addToCartButton.first().click();
     }
