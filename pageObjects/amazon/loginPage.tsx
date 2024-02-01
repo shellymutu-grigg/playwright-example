@@ -1,5 +1,5 @@
 import type { Page, Locator } from 'playwright-core';
-import { loginUrl } from '../data/data';
+import { loginUrl } from '../../data/data';
 import { expect } from '@playwright/test';
 
 export class loginPage{

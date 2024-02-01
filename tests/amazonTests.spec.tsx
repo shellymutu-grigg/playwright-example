@@ -19,7 +19,7 @@
 */
 
 import { test } from '@playwright/test';
-import { pageObjectManager } from '../pageObjects/pageObjectManager';
+import { pageObjectManager } from '../pageObjects/amazon/pageObjectManager';
 import { 
   PRODUCT_ADDED_TO_CART_MESSAGE, 
   AUTHENTICATION_REQUIRED_MESSAGE, 
