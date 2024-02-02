@@ -11,7 +11,6 @@ export class pageObjectManager{
     landingPage: landingPage;
     loginPage: loginPage;
     productsPage: productsPage;
-    
 
     constructor(page: Page){
         this.page = page;

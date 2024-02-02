@@ -10,7 +10,7 @@ export class githubPanel{
     constructor(page: Page){
         this.page = page;
         this.githubHeader = this.page.locator('#github_header').first();
-        this.githubLink = this.page.getByRole('link').first();
+        this.githubLink = this.page.getByRole('link', { name: 'shellymutu-grigg' }).first();
         this.githubCarouselButton = this.page.getByText('Go to panel 2');
     }
 
@@ -27,6 +27,7 @@ export class githubPanel{
 
     async checkGithubLink(text: string): Promise<void>{
         await expect(this.githubLink).toHaveText(text);
+        await expect(this.githubLink).toHaveAttribute('href', 'https://github.com/shellymutu-grigg');
     }
 
     async checkNavigationDot(): Promise<void>{

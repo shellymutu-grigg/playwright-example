@@ -1,21 +1,27 @@
 import { test } from '@playwright/test';
-import { githubPanel } from '../pageObjects/shellymutugrigg/githubPanel';
-import { landingPanel } from '../pageObjects/shellymutugrigg/landingPanel';
+import { pageObjectManager } from '../pageObjects/shellymutugrigg/pageObjectManager';;
 import { shellymutugriggUrl } from '../data/data'
 
 test('Verify shellymutugrigg.com', async ({ page }) => {
-    const titlePanel = new landingPanel(page);
-    const gitHubPanel = new githubPanel(page);
+    const pageObjects = new pageObjectManager(page);
+    const landingPanel = pageObjects.getLandingPanel();
+    const githubPanel = pageObjects.getGithubPanel();
+    const linkedInPanel = pageObjects.getLinkedInPanel();
 
-    await titlePanel.navigateToLandingPage(shellymutugriggUrl, 'Shelly Mutu-Grigg');
-    await titlePanel.pauseNavigation();
-    await titlePanel.checkTitlePanelHeader('Shelly (Michelle) Mutu-Grigg');
-    await titlePanel.checkTitlePanelSummary('A wāhine māori hailing from Ngāti Kahu');
-    await titlePanel.checkNavigationDot();
-    await titlePanel.checkNavigationArrows();
+    await landingPanel.navigateToLandingPage(shellymutugriggUrl, 'Shelly Mutu-Grigg');
+    await landingPanel.pauseNavigation();
+    await landingPanel.checkTitlePanelHeader('Shelly (Michelle) Mutu-Grigg');
+    await landingPanel.checkTitlePanelSummary('A wāhine māori hailing from Ngāti Kahu');
+    await landingPanel.checkNavigationDot();
+    await landingPanel.checkNavigationArrows();
 
-    await gitHubPanel.checkNavigationDot();
-    await gitHubPanel.navigateToGithubPanel();
-    await gitHubPanel.checkGithubPanelHeader('Github');
-    await gitHubPanel.checkGithubLink('shellymutu-grigg');
+    await githubPanel.checkNavigationDot();
+    await githubPanel.navigateToGithubPanel();
+    await githubPanel.checkGithubPanelHeader('Github');
+    await githubPanel.checkGithubLink('shellymutu-grigg');
+
+    await linkedInPanel.checkNavigationDot();
+    await linkedInPanel.navigateToGithubPanel();
+    await linkedInPanel.checkLinkedInPanelHeader('LinkedIn');
+    await linkedInPanel.checkLinkedInLink('shellymutu-grigg');
 })
