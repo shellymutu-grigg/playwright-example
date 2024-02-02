@@ -22,7 +22,7 @@ export class landingPanel{
         this.titleCarouselButton = this.page.getByText('Go to panel 1');
     }
 
-    async navigateToLandingPage(url: string, title: string): Promise<void>{
+    async navigateToLandingPanel(url: string, title: string): Promise<void>{
         await this.page.goto(url);
         console.log('Page title: ', await this.page.title());
         await expect(this.page).toHaveTitle(title);
@@ -34,13 +34,13 @@ export class landingPanel{
         await expect(this.resumeButton).toBeVisible();
     }
 
-    async checkTitlePanelHeader(text: string): Promise<void>{
+    async checkLandingPanelHeader(text: string): Promise<void>{
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.titleHeader).toHaveText(text);
         await expect(this.titleHeader).toHaveClass('divider name-divider');
     }
 
-    async checkTitlePanelSummary(text: string): Promise<void>{
+    async checkLandingPanelSummary(text: string): Promise<void>{
         await expect(this.summary).toContainText(text);
         await expect(this.summary).toHaveClass('description');
     }

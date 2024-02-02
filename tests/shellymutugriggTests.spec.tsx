@@ -7,12 +7,13 @@ test('Verify shellymutugrigg.com', async ({ page }) => {
     const landingPanel = pageObjects.getLandingPanel();
     const githubPanel = pageObjects.getGithubPanel();
     const linkedInPanel = pageObjects.getLinkedInPanel();
+    const clientPanel = pageObjects.getClientPanel();
 
-    await landingPanel.navigateToLandingPage(shellymutugriggUrl, 'Shelly Mutu-Grigg');
+    await landingPanel.navigateToLandingPanel(shellymutugriggUrl, 'Shelly Mutu-Grigg');
     await landingPanel.pauseNavigation();
-    await landingPanel.checkTitlePanelHeader('Shelly (Michelle) Mutu-Grigg');
-    await landingPanel.checkTitlePanelSummary('A wāhine māori hailing from Ngāti Kahu');
     await landingPanel.checkNavigationDot();
+    await landingPanel.checkLandingPanelHeader('Shelly (Michelle) Mutu-Grigg');
+    await landingPanel.checkLandingPanelSummary('A wāhine māori hailing from Ngāti Kahu');
     await landingPanel.checkNavigationArrows();
 
     await githubPanel.checkNavigationDot();
@@ -21,7 +22,12 @@ test('Verify shellymutugrigg.com', async ({ page }) => {
     await githubPanel.checkGithubLink('shellymutu-grigg');
 
     await linkedInPanel.checkNavigationDot();
-    await linkedInPanel.navigateToGithubPanel();
+    await linkedInPanel.navigateToLinkedInPanel();
     await linkedInPanel.checkLinkedInPanelHeader('LinkedIn');
     await linkedInPanel.checkLinkedInLink('shellymutu-grigg');
+
+    await clientPanel.checkNavigationDot();
+    await clientPanel.navigateToClientsPanel();
+    await clientPanel.checkClientsPanelHeader('Previous Clients');
+    await clientPanel.checkClientImage('./src/img/serko-logo.png');
 })

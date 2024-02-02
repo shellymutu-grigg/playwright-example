@@ -14,7 +14,7 @@ export class linkedInPanel{
         this.linkedInCarouselButton = this.page.getByText('Go to panel 3');
     }
 
-    async navigateToGithubPanel(): Promise<void>{
+    async navigateToLinkedInPanel(): Promise<void>{
         await this.linkedInCarouselButton.click();
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.linkedInHeader).toBeVisible();
