@@ -1,20 +1,35 @@
 import type { Page, Locator } from 'playwright-core';
 import { expect } from '@playwright/test';
 
-export class landingPage{
+export class githubPanel{
     page: Page;
-    titleHeader: Locator;
-    summary: Locator;
-    pauseButton: Locator;
-    resumeButton: Locator;
-    titleCarouselButton: Locator;
+    githubHeader: Locator;
+    githubLink: Locator;
+    githubCarouselButton: Locator;
 
     constructor(page: Page){
         this.page = page;
-        this.titleHeader = this.page.locator('#title_header').first();
-        this.summary = this.page.locator('#summary');
-        this.pauseButton = this.page.locator('#pause_button');
-        this.resumeButton = this.page.locator('#resume_button');
-        this. titleCarouselButton = this.page.getByRole('button').locator(':scope.slide-dot-test-id-1');
+        this.githubHeader = this.page.locator('#github_header').first();
+        this.githubLink = this.page.getByRole('link').first();
+        this.githubCarouselButton = this.page.getByText('Go to panel 2');
+    }
+
+    async navigateToGithubPanel(): Promise<void>{
+        await this.githubCarouselButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        await expect(this.githubHeader).toBeVisible();
+    }
+
+    async checkGithubPanelHeader(text: string): Promise<void>{
+        await expect(this.githubHeader).toHaveText(text);
+        await expect(this.githubHeader).toHaveClass('divider github-divider');
+    }
+
+    async checkGithubLink(text: string): Promise<void>{
+        await expect(this.githubLink).toHaveText(text);
+    }
+
+    async checkNavigationDot(): Promise<void>{
+        await expect(this.githubCarouselButton).toBeVisible();
     }
 }
