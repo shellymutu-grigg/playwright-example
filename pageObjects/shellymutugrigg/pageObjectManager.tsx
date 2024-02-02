@@ -2,7 +2,8 @@ import type { Page } from 'playwright-core'
 import { githubPanel } from './githubPanel';
 import { landingPanel} from './landingPanel';
 import { linkedInPanel } from './linkedInPanel';
-import { clientsPanel } from './clientsPanel'
+import { clientsPanel } from './clientsPanel';
+import { contactPanel } from './contactPanel';
 
 export class pageObjectManager{
     page: Page;
@@ -10,13 +11,15 @@ export class pageObjectManager{
     landingPanel: landingPanel;
     linkedInPanel: linkedInPanel;
     clientPanel: clientsPanel;   
+    contactPanel: contactPanel;
 
     constructor(page: Page){
         this.page = page;
         this.githubPanel = new githubPanel(this.page);
         this.landingPanel = new landingPanel(this.page);
         this.linkedInPanel = new linkedInPanel(this.page); 
-        this.clientPanel = new clientsPanel(this.page)
+        this.clientPanel = new clientsPanel(this.page);
+        this.contactPanel = new contactPanel(this.page);
     }
 
     getGithubPanel(){
@@ -33,6 +36,10 @@ export class pageObjectManager{
 
     getClientPanel(){
         return this.clientPanel;
+    }
+
+    getContactPanel(){
+        return this.contactPanel;
     }
 }
 module.exports = { pageObjectManager }
